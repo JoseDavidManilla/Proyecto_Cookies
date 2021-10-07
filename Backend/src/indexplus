@@ -1,0 +1,39 @@
+const express = require('express');
+const cookieParser = require('cookie-parser');
+//setup express app
+const app = express()
+
+app.use(cookieParser());
+
+//JSON object to be added to cookie
+const users = {
+    name: "David",
+    Age: "21"
+}
+
+//Route for adding cookie
+app.get('/setuser', (req, res) => {
+    res.cookie("userData", users);
+    res.send('usuario agregado');
+});
+
+//Iterate users data from cookie
+app.get('/getuser', (req, res) => {
+    //shows all the cookies
+    res.send(req.cookies); 
+});
+
+//Route for destroying cookie
+app.get('/logout', (req, res) => {
+    //it will clear the userData cookie
+    res.clearCookie('userData');
+    res.send('sesion terminada');
+});
+
+
+//server listens to port 4 000
+app.listen(4000, (err) => {
+    if (err)
+        throw err;
+    console.log('listening on port 4000');
+});
